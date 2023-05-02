@@ -11,15 +11,16 @@
 </head>
 <body>
     <div class="main">
-        <form action="/" method="GET">
+        <form id="register-form" action="/" method="GET">
             <div class="login">
                 <div class="log-con">
                     <div class="heading">註冊</div>
-                    <input type="text" class="name" placeholder="請輸入使用者名稱"/>
-                    <input type="text" class="password" placeholder="請輸入密碼"/>
+                    <input type="text" id="username" class="name" placeholder="請輸入使用者名稱"/>
+                    <input type="text" id="password" class="password" placeholder="請輸入密碼"/>
                     <input type="text" class="code" placeholder="請輸入驗證碼"/>
                     <input type="button" id="code" οnclick="change();"/>
-                    <button type="submit" class="reg-btn">Register Now</button>
+                    <button type="submit" id="register-btn" class="reg-btn">Register Now</button>
+                    <script src="/static/js/register.js"></script>
                 </div>
             </div>
         </form>
@@ -27,5 +28,5 @@
     <footer>
         © 2023 All rights reserved by Election the Rock.
     </footer>
-    </body>
+</body>
 </html>

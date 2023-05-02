@@ -1,4 +1,4 @@
-/*
+
 var mysql = require('mysql2');
 var connection = mysql.createConnection({
     host: '192.168.56.1',
@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     database: 'final_project'
 })
 module.exports = connection;
-*/
+
 // connection.connect();
 
 // let musicBlock1 = document.getElementById("mB1");

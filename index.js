@@ -1,10 +1,10 @@
 const express = require('express');
 const engine = require('ejs-locals');
 const app = express();
-/*
+
 const db = require('./db');
 db.connect();
-*/
+
 app.engine('ejs', engine);
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -12,7 +12,8 @@ app.use('/static', express.static(__dirname + '/public'));
 
 let singer;
 let song;
-/*
+let user;
+
 db.query('SELECT * FROM Singer', function(error, results, fields){
     if(error) throw error;
     singer = results;
@@ -21,11 +22,15 @@ db.query('SELECT * FROM Song', function(error, results, fields){
     if(error) throw error;
     song = results;
 });
-*/
+db.query('SELECT * FROM User', function(error, results, fields){
+    if(error) throw error;
+    user = results;
+});
+
 app.get('/',function(req, res){
     res.render('login',{
-        'title' : '登入'
-        //'User' : user
+        'title' : '登入',
+        'user' : user
     })
 })
 app.get('/register',function(req,res){
@@ -33,18 +38,18 @@ app.get('/register',function(req,res){
         'title':'註冊'
     })
 })
-app.post('/home', function(req, res) {
+app.get('/home', function(req, res) {
     res.render('index', {
         'title': '首頁'
-        // 'title': data[0].name
+        //'title': data[0].name
     });
 })
 app.get('/trend', function(req, res) {
     res.render('trend', {
         'title': '熱門',
         // 'title': data[1].name
-        //'singer' : singer,
-        //'song' : song
+        'singer' : singer,
+        'song' : song
     });
 })
 app.get('/history', function(req, res) {
@@ -59,7 +64,7 @@ app.get('/playlist', function(req, res) {
     });
 })
 
-//db.end();
+db.end();
 
 const port = 3000;
 
