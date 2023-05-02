@@ -11,16 +11,20 @@ else{
 //document.querySelector("#btn").addEventListener("click", function() {window.location.href = "/layout"});
 
 /*
-function password_right(user_account,password){
-    if(User[user_account]){
-        if (password==User[user_account].password){
-            window.location.href = "/index.ejs" //跳轉首頁
-            return User[user_account];
-        }
-    }
-    else{
-        alert("Wrong User Account Or Password !! Please Do It Again.");
-    }
+const form = document.querySelector('form');
+const usernameInput = document.querySelector('input[name="login[username]"]');
+const passwordInput = document.querySelector('input[name="login[password]"]');
 
-}
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const username = usernameInput.value;
+  const password = passwordInput.value;
+  if (username === 'a@gmail.com' && password === '123123') {
+    document.getElementById('btn').type = 'submit';
+    form.submit();
+  } else {
+    alert('帳號或密碼不正確');
+  }
+});
+
 */
