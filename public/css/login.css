@@ -1,0 +1,116 @@
+body {
+    background-image: url("/static/images/login_background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+/* Style the container */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 50px 20px;
+  }
+  
+  /* Style the form */
+  .form-horizontal {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 30px;
+    margin-top: 100px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style the heading */
+  .heading {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Style the form group */
+  .form-group {
+    position: relative;
+    margin-bottom: 25px;
+    margin-top:10px;
+ 
+  }
+  
+  /* Style the icons */
+  .form-group i {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    color: #aaa;
+  }
+  
+  /* Style the input fields */
+  .form-control {
+    border-radius: 0;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    padding-left: 35px;
+    padding-top:14px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border-bottom-color: #374b5f;
+  }
+  
+  /*icon*/
+.icon{
+    text-align: center;
+    width: 17px;
+    height: 17px;
+}
+
+  /* Style the submit button */
+  .btn-default {
+    background-color: #5f8fc6;
+    color: #fff;
+    border-radius: 0;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    display: block;
+    margin: 0 auto;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    box-shadow: 0px 5px 4px #445867;
+  }
+  
+  .btn-default:hover {
+    background-color: #406183;
+    box-shadow: 0px 2px 2px #253540;
+  }
+
+  
+  /* Style the link */
+  .create_account {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .create_account:hover {
+    text-decoration: underline;
+  }
+  
+  footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+  }
+  

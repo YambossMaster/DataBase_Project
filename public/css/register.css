@@ -1,0 +1,93 @@
+/* 設定 body 背景色 */
+body {
+    background-image: url("/static/images/login_background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  /* 設定主要區塊的寬度和上邊距 */
+  .main {
+    width: 400px;
+    margin: 50px auto;
+  }
+
+  /*註冊*/
+  .heading {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* 設定登錄框的樣式 */
+  .login {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  
+  /* 設定登錄框內容的樣式 */
+  .log-con {
+    text-align: center;
+  }
+  
+  /* 設定註冊標題的樣式 */
+  .log-con span {
+    display: block;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  /* 設定輸入框的樣式 */
+  .log-con input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  /* 設定驗證碼按鈕的樣式 */
+  .log-con input[type="button"] {
+    width: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* 設定註冊按鈕的樣式 */
+  .log-con a {
+    display: block;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* 設定註冊按鈕的懸停樣式 */
+  .log-con a:hover {
+    background-color: #666;
+  }
+  
+  footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+  }
