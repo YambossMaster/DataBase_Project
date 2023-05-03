@@ -97,6 +97,10 @@ body {
     color: #007bff;
     text-decoration: none;
   }
+  .reg_btn_position{
+    text-align: right;
+    font-size: 16px;
+  }
   
   .create_account:hover {
     text-decoration: underline;

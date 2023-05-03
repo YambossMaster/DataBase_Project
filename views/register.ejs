@@ -15,11 +15,34 @@
             <div class="login">
                 <div class="log-con">
                     <div class="heading">註冊</div>
-                    <input type="text" id="username" class="name" placeholder="請輸入使用者名稱"/>
-                    <input type="text" id="password" class="password" placeholder="請輸入密碼"/>
-                    <input type="text" class="code" placeholder="請輸入驗證碼"/>
-                    <input type="button" id="code" οnclick="change();"/>
-                    <button type="submit" id="register-btn" class="reg-btn">Register Now</button>
+                    <div class="data_input">
+                        <div class="before_input">暱稱</div>
+                        <input type="text" id="user_name" class="user_name input_block" placeholder="請輸入暱稱"/>
+                    </div>
+                    <div class="data_input">
+                        <div class="before_input">電郵</div>
+                        <input type="email" id="email" class="email input_block" placeholder="請輸入電子郵件"/>
+                    </div>
+                    <div class="data_input">
+                        <div class="before_input">密碼</div>
+                        <input type="password" id="password" class="password input_block" placeholder="請輸入密碼"/>
+                    </div>
+                    <div class="data_input">
+                        <div class="before_input">確認</div>
+                        <input type="password" id="re_password" class="re_password input_block" placeholder="再次確認密碼"/>
+                    </div>
+                    
+                    <div class="birthday">
+                        <div class="before_input">出生日期</div>
+                        <input type="text" id="birth_y" class="birth_y" placeholder="YYYY"/>
+                        <input type="text" id="birth_m" class="birth_m" placeholder="MM"/>
+                        <input type="text" id="birth_d" class="birth_d" placeholder="DD"/>
+                    </div>
+                    <div class="verification_code">
+                        <input type="text" class="code" placeholder="請輸入驗證碼"/>
+                        <input type="button" id="code"/>
+                    </div>
+                    <button type="submit" id="reg_btn" class="reg_btn">Register Now</button>
                     <script src="/static/js/register.js"></script>
                 </div>
             </div>

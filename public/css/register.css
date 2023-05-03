@@ -49,6 +49,23 @@ body {
     margin-bottom: 20px;
     font-size: 16px;
   }
+  .log-con input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  .log-con input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
   
   /* 設定驗證碼按鈕的樣式 */
   .log-con input[type="button"] {
@@ -92,10 +109,99 @@ body {
     padding: 10px;
   }
 
+  /*input block*/
+  .data_input{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .before_input{
+    padding-bottom: 20px;
+  }
+  .input_block{
+    width: 70%;
+  }
+  /*class = birthday*/
+  .birthday {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .birthday label {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #333;
+  }
+  
+  .birthday select {
+    width: 24%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  .birthday select:last-child {
+    margin-right: 0;
+  }
+  
+  .birthday input[type="text"] {
+    width: 20%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  .birthday input[type="text"]:last-child {
+    margin-right: 0;
+  }
+  /*class = verification_code*/
+  .verification_code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    }
+
   .code {
-    pointer-events: none;
+    width: 50%;
   }
 
   #code{
-    background-color: white;
+    border-radius: 5;
+    border: black solid 1px;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    width: 50%;
+    text-align: center;
+    /*pointer-events: none;*/
+  }
+  #code:hover {
+    background-color: #5d5d5d;
+    box-shadow: 0px 2px 2px #253540;
+  }
+  /*register_btn*/
+  .reg_btn{
+    background-color: #5f8fc6;
+    color: #fff;
+    border-radius: 0;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    display: block;
+    margin: 0 auto;
+    width: 150px;
+    height: 40px;
+    text-align: center;
+    box-shadow: 0px 5px 4px #445867;
+  }
+  .reg_btn:hover {
+    background-color: #406183;
+    box-shadow: 0px 2px 2px #253540;
   }
