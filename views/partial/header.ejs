@@ -1,20 +1,22 @@
 <header>
     <div class="banner">
-        <img src="/static/images/banner3.png" alt="" class="imgs">
+        <img src="/static/images/banner1.png" alt="" class="imgs" id="imgs">
     </div>
     <div class="menu">
-        <div class="logo"><a href="#">LOGO</a></div>
+        <div class="logo"><a href="#">sspootifiy</a></div>
         <nav>
             <ul class="flex-nav">
-                <li><a href="/"><i class="fa-solid fa-house"></i> 首頁</a></li>
+                <li><a href="/home"><i class="fa-solid fa-house"></i> 首頁</a></li>
                 <li><a href="/trend"><i class="fa-solid fa-fire"></i> 熱門</a></li>
                 <li><a href="/history"><i class="fa-solid fa-clock-rotate-left"></i> 播放紀錄</a></li>
                 <li><a href="/playlist"><i class="fa-solid fa-list"></i> 你的清單</a></li>
             </ul>
         </nav>
         <div class="search">
-            <input type="text" name="search" placeholder="請輸入">
-            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i>搜尋</button>
+            <form action="/search" method="post">
+                <input type="text" name="search" placeholder="請輸入關鍵字">
+                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i>搜尋</button>
+            </form>
         </div>
     </div>
     <div class="theme">

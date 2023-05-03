@@ -8,16 +8,16 @@ demo.addEventListener("click", () => {
     });
     // myAudio.src = "/static/music/0002.mp3";
 });
-if(window.location.pathname != "/"){
+if(window.location.pathname != "/home"){
     setTimeout(function() {
         scrollTo({
             top: window.innerHeight,
             behavior: 'smooth'
         });
-        footer.classList.add("show");
+        // footer.classList.add("show");
     }, 1000);
 }
-if(window.location.pathname == "/"){
+if(window.location.pathname == "/home"){
     myAudio.autoplay = false;
 }
 
@@ -33,7 +33,10 @@ setInterval(() => {
 // 音樂區塊的點擊事件
 const musicBlocks = document.querySelectorAll('.musicBlock');
 musicBlocks.forEach(musicBlock => {
-    musicBlock.addEventListener("click", () => {
+    let musicCover = musicBlock.querySelector('.musicCover');
+    musicCover.addEventListener("click", () => {
+        footer.classList.add("show");
+        myAudio.autoplay = true;
         myAudio.src = `/static/music/${musicBlock.id}.mp3`;
     });
 });
