@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="/static/css/login.css">
     
     <title><%= title %></title>
+
+    <script>
+        var users = <%- JSON.stringify(user) %>; //將user表格傳入js檔
+        // console.log(users);
+    </script>
 </head>
 <body>
     <div class="demo form-bg">
@@ -15,20 +20,16 @@
             
             <div class="row">
                 <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6">
-                    <form class="form-horizontal" action="/home" method="GET">
+                    <form id="login-form" class="form-horizontal" action="/home" method="GET">
                         <div class="heading">登入介面</div>
                         <div class="form-group">
-                            <i><img class="icon" src="static/images/user_name_icon.png"></i><input required name="login[username]" type="email" class="form-control user_account" placeholder="Username" id="exampleInputEmail1">
+                            <i><img class="icon" src="static/images/user_name_icon.png"></i><input required name="login[username]" type="email" class="form-control user_account" placeholder="Username" id="username">
                         </div>
                         <div class="form-group">
-                            <i><img class="icon" src="static/images/lock_icon.png"></i><input required name="login[password]" type="password" class="form-control password" placeholder="Password" />
+                            <i><img class="icon" src="static/images/lock_icon.png"></i><input required name="login[password]" type="password" class="form-control password" placeholder="Password" id="password">
                         </div>
                         <div class="form-group">
                             <button type="submit" id="btn" class="btn btn-default">Log in</button>
-                            <!-- <script>
-                                var users = JSON.stringify(user);//將user表格傳入js檔
-                            </script>
-                            <script src="/static/js/password.js"></script> -->
                             <span><a href="/register" class="create_account">註冊</a></span>
                         </div>
                     </form>
@@ -39,5 +40,6 @@
     <footer>
         © 2023 All rights reserved by Election the Rock.
     </footer>
+    <script src="/static/js/password.js"></script>
 </body>
 </html>
