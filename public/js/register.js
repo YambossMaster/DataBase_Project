@@ -36,6 +36,7 @@ codeDisplay.addEventListener('click',function(){
 // 提交表單時進行驗證
 form.addEventListener('submit', function(event) {
   event.preventDefault();
+  console.log("Start submit ~");
   const username = usernameInput.value;
   const password = passwordInput.value;
   const repassword = repasswordInput.value;
@@ -46,18 +47,42 @@ form.addEventListener('submit', function(event) {
 
   const inputCode = codeInput.value;
 
-  /*password and repassword*/
-  if(password != repassword){
-    alert('密碼前後不一致，請確認後再次輸入。');
-    repasswordInput.value = '';
+
+  var complete = false; var PasswordAndRepassword = false;
+  if(password=="" || repassword=="" || email=="" || username=="" || birth_d=="" || birth_m=="" || birth_y==""){
+    alert('註冊資訊不完整，請詳細填寫！');
   }
+  else{
+    complete=true;
+  }
+  
+
+  /*password and repassword*/
+  if(complete){
+    if(password != repassword){
+      alert('密碼前後不一致，請確認後再次輸入。');
+      repasswordInput.value = '';
+    }
+    else{
+      PasswordAndRepassword=true;
+    }
+  }
+  
   /*verification code*/
-  if (code && inputCode.toLowerCase() == code.toLowerCase()) {
-    document.getElementById('btn').type = 'submit';
-    form.submit();
-  } else {
-    alert('驗證碼不正確!!請在試一次。');
-    codeInput.value = '';
-    change();
+  if(PasswordAndRepassword){
+    console.log("complete : " + complete);  
+    console.log("password : "+ password + "; repassword : " + repassword + "; pass==repass : " + PasswordAndRepassword);
+    console.log("code : " + code + "; inputCode = " + inputCode);
+    if (code && inputCode.toLowerCase() == code.toLowerCase()) {
+      document.getElementById('reg_btn').type = 'submit';
+      /*將username email password birthday 加入數據庫存儲*/
+      form.submit();//之後還需加入判定是否存在數據庫
+      window.location.href = '/';
+    } 
+    else {
+      alert('驗證碼不正確!!請在試一次。');
+      codeInput.value = '';
+      change();
+    }
   }
 });
