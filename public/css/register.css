@@ -116,9 +116,11 @@ body {
   }
   .before_input{
     padding-bottom: 20px;
+    width:80px;
   }
   .input_block{
     width: 70%;
+    margin-right: 40px;
   }
   /*class = birthday*/
   .birthday {
@@ -188,7 +190,7 @@ body {
   .reg_btn{
     background-color: #5f8fc6;
     color: #fff;
-    border-radius: 0;
+    border-radius: 5px;
     border: none;
     font-size: 16px;
     font-weight: bold;
