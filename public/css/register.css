@@ -111,7 +111,7 @@ body {
   /*input block*/
   .data_input{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
   }
   .before_input{
@@ -125,7 +125,7 @@ body {
   /*class = birthday*/
   .birthday {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
   }
   
@@ -201,6 +201,7 @@ body {
     height: 40px;
     text-align: center;
     box-shadow: 0px 5px 4px #445867;
+    cursor: pointer;
   }
   .reg_btn:hover {
     background-color: #406183;

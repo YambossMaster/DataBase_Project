@@ -8,42 +8,59 @@
     <link rel="stylesheet" href="/static/css/register.css">
     
     <title><%= title %></title>
+
+    <script>
+        var users = <%- JSON.stringify(user) %>; //將user表格傳入js檔
+        // console.log(users);
+    </script>
 </head>
 <body>
     <div class="main">
-        <form id="register-form" method="GET"> <!--  action="/"  -->
+        <form id="register-form" action="/regfinish" method="POST"> <!--  action="/"  -->
             <div class="login">
                 <div class="log-con">
                     <div class="heading">註冊</div>
                     <div class="data_input">
                         <div class="before_input">暱稱</div>
-                        <input type="text" id="user_name" class="user_name input_block" placeholder="請輸入暱稱"/>
+                        <input type="text" id="user_name" class="user_name input_block" placeholder="請輸入暱稱" required="required" name="userName"/>
                     </div>
                     <div class="data_input">
                         <div class="before_input">電郵</div>
-                        <input type="email" id="email" class="email input_block" placeholder="請輸入電子郵件"/>
+                        <input type="email" id="email" class="email input_block" placeholder="請輸入電子郵件" required="required" name="email"/>
                     </div>
                     <div class="data_input">
                         <div class="before_input">密碼</div>
-                        <input type="password" id="password" class="password input_block" placeholder="請輸入密碼"/>
+                        <input type="password" id="password" class="password input_block" placeholder="請輸入密碼" required="required" name="password"/>
                     </div>
                     <div class="data_input">
                         <div class="before_input">確認</div>
-                        <input type="password" id="repassword" class="repassword input_block" placeholder="再次確認密碼"/>
+                        <input type="password" id="repassword" class="repassword input_block" placeholder="再次確認密碼" required="required"/>
+                    </div>
+
+                    <!-- 性別欄位 -->
+                    <div class="data_input">
+                        <div class="before_input">性別</div>
+                        <label for="boy">
+                            <input type="radio" id="boy" name="gender" value="男" checked> 男性
+                        </label>
+                        <label for="girl">
+                            <input type="radio" id="girl" name="gender" value="女"> 女性
+                        </label>
                     </div>
                     
                     <div class="birthday">
                         <div class="before_input">出生日期</div>
-                        <input type="text" id="birth_y" class="birth_y" placeholder="YYYY"/>
+                        <input type="date" id="birth" required="required" name="birthday">
+                        <!-- <input type="text" id="birth_y" class="birth_y" placeholder="YYYY"/>
                         <input type="text" id="birth_m" class="birth_m" placeholder="MM"/>
-                        <input type="text" id="birth_d" class="birth_d" placeholder="DD"/>
+                        <input type="text" id="birth_d" class="birth_d" placeholder="DD"/> -->
                     </div>
+
                     <div class="verification_code">
                         <input type="text" class="code" placeholder="請輸入驗證碼"/>
                         <input type="button" id="code"/>
                     </div>
                     <button type="submit" id="reg_btn" class="reg_btn">Register Now</button>
-                    <script src="/static/js/register.js"></script>
                 </div>
             </div>
         </form>
@@ -51,5 +68,6 @@
     <footer>
         © 2023 All rights reserved by Election the Rock.
     </footer>
+    <script src="/static/js/register.js"></script>
 </body>
 </html>

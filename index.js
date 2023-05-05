@@ -1,5 +1,6 @@
 const express = require('express');
 const engine = require('ejs-locals');
+const date = require('silly-datetime');
 const app = express();
 app.use(express.urlencoded({extended: false}))
 
@@ -45,8 +46,30 @@ app.get('/',function(req, res){
 })
 app.get('/register',function(req,res){
     res.render('register',{
-        'title':'註冊'
+        'title':'註冊',
+        'user' : user
     })
+})
+app.post('/regfinish',function(req,res){
+    let userName = req.body.userName;
+    let email = req.body.email;
+    let gender = req.body.gender;
+    let password = req.body.password;
+    let birthday  =req.body.birthday;
+    let regDate = date.format(new Date(), 'YYYY-MM-DD');
+    db.query(`INSERT INTO User(nickname, password, email, gender, birthday, regDate) VALUE("${userName}", "${password}", "${email}", "${gender}", "${birthday}", "${regDate}");`, function(error, results, fields){
+        if(error) throw error;
+        res.render('regfinish',{
+            'title':'註冊',
+            'user' : user,
+            'userName' : userName,
+            'email' : email,
+            'genter' : gender,
+            'password' : password,
+            'birthday' : birthday,
+            'regDate' : regDate
+        })
+    });
 })
 app.get('/home', function(req, res) {
     res.render('index', {
