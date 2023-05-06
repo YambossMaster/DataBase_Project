@@ -33,7 +33,7 @@ loginForm.addEventListener('submit', function(event) {
   //   form.submit();
   // } 
   for(let i = 0; i < users.length; ++i){
-    if(username.value === users[i].email && password.value === users[i].password){
+    if(username.value === users[i].nickname && password.value === users[i].password){
       loginSuccess = true;
       break;
     }

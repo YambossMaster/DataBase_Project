@@ -33,22 +33,30 @@ db.query(
     if(error) throw error;
     song = results;
 });
-db.query('SELECT * FROM User', function(error, results, fields){
-    if(error) throw error;
-    user = results;
-});
+// db.query('SELECT * FROM User', function(error, results, fields){
+//     if(error) throw error;
+//     user = results;
+// });
 
 app.get('/',function(req, res){
-    res.render('login',{
-        'title' : '登入',
-        'user' : user
-    })
+    db.query('SELECT * FROM User', function(error, results, fields){
+        if(error) throw error;
+        user = results;
+        res.render('login',{
+            'title' : '登入',
+            'user' : user
+        })
+    });
 })
 app.get('/register',function(req,res){
-    res.render('register',{
-        'title':'註冊',
-        'user' : user
-    })
+    db.query('SELECT * FROM User', function(error, results, fields){
+        if(error) throw error;
+        user = results;
+        res.render('register',{
+            'title':'註冊',
+            'user' : user
+        })
+    });
 })
 app.post('/regfinish',function(req,res){
     let userName = req.body.userName;

@@ -51,7 +51,7 @@ form.addEventListener('submit', function(event) {
 
   let PasswordAndRepassword = false;
   let verificationSuccess = false;
-  let emailNotInDB = true;
+  let userNotInDB = true;
   let allPass = false;
   // if(password=="" || repassword=="" || email=="" || username==""){
   //   alert('註冊資訊不完整，請詳細填寫！');
@@ -91,15 +91,15 @@ form.addEventListener('submit', function(event) {
   if(verificationSuccess) {
     // 判定是否存在於資料庫
     for(let i = 0; i < users.length; ++i){
-      if(email === users[i].email){
-        alert('此email已經被註冊過摟。');
+      if(username === users[i].nickname){
+        alert('使用者名稱已被使用摟。');
         codeInput.value = '';
         change();
-        emailNotInDB = false;
+        userNotInDB = false;
         break;
       }
     }
-    if(emailNotInDB){
+    if(userNotInDB){
       /*將username email password birthday 加入數據庫存儲*/
       allPass = true;
     }
