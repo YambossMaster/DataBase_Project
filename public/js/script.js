@@ -38,5 +38,22 @@ musicBlocks.forEach(musicBlock => {
         footer.classList.add("show");
         myAudio.autoplay = true;
         myAudio.src = `/static/music/${musicBlock.id}.mp3`;
+
+        console.log(JSON.stringify(musicBlock.id));
+
+        fetch('http://localhost:3000/PlayRecordUpdate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({musicBlockId : musicBlock.id})
+        })
+        .then(response => {
+            console.log('Success:', response);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
     });
 });

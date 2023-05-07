@@ -2,7 +2,8 @@ const express = require('express');
 const engine = require('ejs-locals');
 const date = require('silly-datetime');
 const app = express();
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 const db = require('./db');
 db.connect();
@@ -15,6 +16,9 @@ app.use('/static', express.static(__dirname + '/public'));
 let singer;
 let song;
 let user;
+var curUserID;
+
+const curTime = date.format(new Date(), 'YYYY-MM-DD');
 
 db.query('SELECT * FROM Singer', function(error, results, fields){
     if(error) throw error;
@@ -64,7 +68,6 @@ app.post('/regfinish',function(req,res){
     let gender = req.body.gender;
     let password = req.body.password;
     let birthday  =req.body.birthday;
-    let regDate = date.format(new Date(), 'YYYY-MM-DD');
     db.query(`INSERT INTO User(nickname, password, email, gender, birthday, regDate) VALUE("${userName}", "${password}", "${email}", "${gender}", "${birthday}", "${regDate}");`, function(error, results, fields){
         if(error) throw error;
         res.render('regfinish',{
@@ -75,7 +78,7 @@ app.post('/regfinish',function(req,res){
             'genter' : gender,
             'password' : password,
             'birthday' : birthday,
-            'regDate' : regDate
+            'regDate' : curTime
         })
     });
 })
@@ -135,6 +138,37 @@ app.post('/search', function(req, res) {
     //         // 'title': data[2].name
     //     });
     // }
+})
+app.post('/loginBuffer', function(req, res) {
+    let userName = req.body.login_username;
+    console.log(userName);
+    db.query(`SELECT user_id FROM User WHERE nickname = "${userName}"`, function(error, results, fields){
+        if(error) throw error;
+        curUserID = results[0].user_id;
+        console.log(curUserID);
+    });
+    res.send(`<script>console.log("login success");window.location.href = '/home'</script>`);
+})
+
+app.post('/PlayRecordUpdate', function(req, res) {
+    let playingSongID = Number(req.body.musicBlockId);
+    console.log(playingSongID);
+    db.query(`SELECT COUNT(*) AS counts FROM PlayRecord WHERE user_id = "${curUserID}" AND song_id = "${playingSongID}"`, function(error, results, fields){
+        if(error) throw error;
+        let counts = results[0].counts;
+        console.log(counts);
+        if(counts != 0){
+            db.query(`UPDATE PlayRecord SET record = "${curTime}" WHERE user_id = "${curUserID}" AND song_id = "${playingSongID}"`, function(error, results, fields){
+                if(error) throw error;
+            });
+        }
+        else {
+            db.query(`INSERT INTO PlayRecord VALUE("${curUserID}", "${playingSongID}", "${curTime}")`, function(error, results, fields){
+                if(error) throw error;
+            });
+        }
+    });
+    res.send('Success');
 })
 
 // db.end();
