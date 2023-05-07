@@ -23,7 +23,7 @@ const loginForm = document.getElementById("login-form");
 // const passwordInput = document.querySelector('input[name="login[password]"]');
 
 loginForm.addEventListener('submit', function(event) {
-  // event.preventDefault();
+  event.preventDefault();
   let loginSuccess = false;
   const username = document.getElementById("username");
   const password = document.getElementById("password");
@@ -41,7 +41,10 @@ loginForm.addEventListener('submit', function(event) {
   if(!loginSuccess){
     alert('帳號或密碼不正確!!請在試一次。');
     password.value = "";
-    event.preventDefault();
+    // event.preventDefault();
+  }
+  else {
+    loginForm.submit();
   }
   // if(username.value != users[0].email || password.value != users[0].password){
   //   alert('帳號或密碼不正確!!請在試一次。');
