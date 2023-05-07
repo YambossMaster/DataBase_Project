@@ -18,8 +18,6 @@ let song;
 let user;
 var curUserID;
 
-const curTime = date.format(new Date(), 'YYYY-MM-DD');
-
 db.query('SELECT * FROM Singer', function(error, results, fields){
     if(error) throw error;
     singer = results;
@@ -63,12 +61,13 @@ app.get('/register',function(req,res){
     });
 })
 app.post('/regfinish',function(req,res){
+    let curDate = date.format(new Date(), 'YYYY-MM-DD');
     let userName = req.body.userName;
     let email = req.body.email;
     let gender = req.body.gender;
     let password = req.body.password;
     let birthday  =req.body.birthday;
-    db.query(`INSERT INTO User(nickname, password, email, gender, birthday, regDate) VALUE("${userName}", "${password}", "${email}", "${gender}", "${birthday}", "${regDate}");`, function(error, results, fields){
+    db.query(`INSERT INTO User(nickname, password, email, gender, birthday, regDate) VALUE("${userName}", "${password}", "${email}", "${gender}", "${birthday}", "${curDate}");`, function(error, results, fields){
         if(error) throw error;
         res.render('regfinish',{
             'title':'註冊',
@@ -78,7 +77,7 @@ app.post('/regfinish',function(req,res){
             'genter' : gender,
             'password' : password,
             'birthday' : birthday,
-            'regDate' : curTime
+            'regDate' : curDate
         })
     });
 })
@@ -99,9 +98,20 @@ app.get('/trend', function(req, res) {
     });
 })
 app.get('/history', function(req, res) {
-    res.render('history', {
-        'title': '播放紀錄'
-        // 'title': data[2].name
+    db.query(`SELECT newTable.*, record, singername FROM
+    (SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
+        FROM Song INNER JOIN MusicType ON Song.song_id = MusicType.song_id INNER JOIN (SELECT Song.*, GROUP_CONCAT(language SEPARATOR ', ') AS music_languages
+        FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
+        GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
+        GROUP BY Song.song_id) AS newTable, PlayRecord, Singer
+        WHERE newTable.song_id = PlayRecord.song_id AND newTable.singer_id = Singer.singer_id AND PlayRecord.user_id = ${curUserID}
+        ORDER BY record desc`, function(error, results, fields){
+        if(error) throw error;
+        let playRecord = results;
+        res.render('history', {
+            'title': '播放紀錄',
+            'song' : playRecord
+        });
     });
 })
 app.get('/playlist', function(req, res) {
@@ -122,7 +132,6 @@ app.post('/search', function(req, res) {
         res.render('search', {
             'title': '搜尋結果',
             'song' : searchResult,
-            'singer' : singer
             // 'title': data[2].name
         });
     });
@@ -152,6 +161,7 @@ app.post('/loginBuffer', function(req, res) {
 
 app.post('/PlayRecordUpdate', function(req, res) {
     let playingSongID = Number(req.body.musicBlockId);
+    let curTime = date.format(new Date(), 'YYYY-MM-DD HH-mm-ss');
     console.log(playingSongID);
     db.query(`SELECT COUNT(*) AS counts FROM PlayRecord WHERE user_id = "${curUserID}" AND song_id = "${playingSongID}"`, function(error, results, fields){
         if(error) throw error;

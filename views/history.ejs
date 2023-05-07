@@ -1,2 +1,31 @@
 <% layout('layout') %>
-<h1>這裡是播放紀錄</h1>
+<div class="musicList">
+    <% for(var i = 0; i < song.length; i++){ %>
+        <div class="musicBlock" id="<%= song[i].filelink %>">
+            <div class="musicCover">
+                <i class="fa-solid fa-circle-play fa-2xl"></i>
+                <img src="/static/images/<%= song[i].cover_img %>.png" alt="" class="imgs">
+            </div>
+            <div class="musicInfo">
+                <div class="musicName">
+                    <%= song[i].songname %>
+                </div>
+                <div class="musicSinger">
+                    <%= song[i].singername %>
+                </div>
+                <div class="musicAbout">
+                    <div class="musicType">
+                        類型 : <%= song[i].music_types %>
+                    </div>
+                    <div class="musicLanguage">
+                        語言 : <%= song[i].music_languages %>
+                    </div>
+                    <div class="musicPlaytime">
+                        播放次數 : <%= song[i].playtime %>
+                    </div>
+                </div>
+            </div>
+            <div class="functionBar"></div>
+        </div>
+    <% } %>
+</div>
