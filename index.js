@@ -26,15 +26,7 @@ db.query('SELECT * FROM Singer', function(error, results, fields){
 //     if(error) throw error;
 //     song = results;
 // });
-db.query(
-    `SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
-    FROM Song INNER JOIN MusicType ON Song.song_id = MusicType.song_id INNER JOIN (SELECT Song.*, GROUP_CONCAT(language SEPARATOR ', ') AS music_languages
-    FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
-    GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
-    GROUP BY Song.song_id;`, function(error, results, fields){
-    if(error) throw error;
-    song = results;
-});
+
 // db.query('SELECT * FROM User', function(error, results, fields){
 //     if(error) throw error;
 //     user = results;
@@ -82,11 +74,20 @@ app.post('/regfinish',function(req,res){
     });
 })
 app.get('/home', function(req, res) {
-    res.render('index', {
-        'title': '首頁',
-        'singer' : singer,
-        'song' : song
-        //'title': data[0].name
+    db.query(
+        `SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
+        FROM Song INNER JOIN MusicType ON Song.song_id = MusicType.song_id INNER JOIN (SELECT Song.*, GROUP_CONCAT(language SEPARATOR ', ') AS music_languages
+        FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
+        GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
+        GROUP BY Song.song_id;`, function(error, results, fields){
+        if(error) throw error;
+        song = results;
+        res.render('index', {
+            'title': '首頁',
+            'singer' : singer,
+            'song' : song
+            //'title': data[0].name
+        });
     });
 })
 app.get('/trend', function(req, res) {
@@ -120,13 +121,13 @@ app.get('/playlist', function(req, res) {
     });
 })
 app.post('/search', function(req, res) {
-    db.query(`SELECT * FROM
+    db.query(`SELECT newTable.*, singername FROM
     (SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
     FROM Song INNER JOIN MusicType ON Song.song_id = MusicType.song_id INNER JOIN (SELECT Song.*, GROUP_CONCAT(language SEPARATOR ', ') AS music_languages
     FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
     GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
-    GROUP BY Song.song_id) AS newTable
-    WHERE newTable.songname LIKE '%${req.body.search}%' OR newTable.music_types LIKE '%${req.body.search}%' OR newTable.music_languages LIKE '%${req.body.search}%';`, function(error, results, fields){
+    GROUP BY Song.song_id) AS newTable, Singer
+    WHERE (newTable.songname LIKE '%${req.body.search}%' OR newTable.music_types LIKE '%${req.body.search}%' OR newTable.music_languages LIKE '%${req.body.search}%') AND newTable.singer_id = Singer.singer_id`, function(error, results, fields){
         if(error) throw error;
         const searchResult = results;
         res.render('search', {
@@ -159,20 +160,27 @@ app.post('/loginBuffer', function(req, res) {
     res.send(`<script>console.log("login success");window.location.href = '/home'</script>`);
 })
 
-app.post('/PlayRecordUpdate', function(req, res) {
+app.post('/PlayingUpdate', function(req, res) {
     let playingSongID = Number(req.body.musicBlockId);
     let curTime = date.format(new Date(), 'YYYY-MM-DD HH-mm-ss');
     console.log(playingSongID);
+
+    // 更新點擊歌曲之播放次數
+    db.query(`UPDATE Song SET playtime = playtime + 1 WHERE song_id = ${playingSongID}`, function(error, results, fields){
+        if(error) throw error;
+    });
+
+    // 確認此音樂是否已經存在於播放紀錄中
     db.query(`SELECT COUNT(*) AS counts FROM PlayRecord WHERE user_id = "${curUserID}" AND song_id = "${playingSongID}"`, function(error, results, fields){
         if(error) throw error;
         let counts = results[0].counts;
         console.log(counts);
-        if(counts != 0){
+        if(counts != 0){ //若存在，則更新播放時間
             db.query(`UPDATE PlayRecord SET record = "${curTime}" WHERE user_id = "${curUserID}" AND song_id = "${playingSongID}"`, function(error, results, fields){
                 if(error) throw error;
             });
         }
-        else {
+        else { //若不存在，新增此筆紀錄
             db.query(`INSERT INTO PlayRecord VALUE("${curUserID}", "${playingSongID}", "${curTime}")`, function(error, results, fields){
                 if(error) throw error;
             });

@@ -41,7 +41,8 @@ musicBlocks.forEach(musicBlock => {
 
         console.log(JSON.stringify(musicBlock.id));
 
-        fetch('http://localhost:3000/PlayRecordUpdate', {
+        // 使用fetch方法傳遞被點擊的音樂ID給後端，更新播放紀錄與播放次數
+        fetch('http://localhost:3000/PlayingUpdate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
