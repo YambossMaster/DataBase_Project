@@ -189,6 +189,45 @@ app.post('/PlayingUpdate', function(req, res) {
     res.send('Success');
 })
 
+// 音樂加入清單請求
+app.post('/addMusicToList', function(req, res){
+    let curTime = date.format(new Date(), 'YYYY-MM-DD HH-mm-ss');
+    let playingSongID = Number(req.body.musicBlockId);
+    let storeList = req.body.storeList;
+    console.log(typeof(storeList));
+    console.log(playingSongID + " " + storeList);
+
+    // 確認輸入的清單是否存在
+    db.query(`SELECT count(*) AS counts FROM PlayList WHERE user_id = "${curUserID}" AND listname = "${storeList}"`, function(error, results, field){
+        if(error) throw error;
+        let playlistExist = results[0].counts;
+        console.log("playlistExist" + playlistExist);
+        if(!playlistExist){ //若清單不存在，則新建立一個
+            db.query(`INSERT INTO PlayList(listname, createdate, user_id) VALUE("${storeList}", "${curTime}", "${curUserID}")`, function(error, results, field){
+                if(error) throw error;
+            });
+        }
+        // 取得輸入清單的編號
+        db.query(`SELECT list_id FROM PlayList WHERE listname = "${storeList}"`, function(error, results, field){
+            if(error) throw error;
+            let listID = results[0].list_id;
+            // 確認歌曲是否存在於輸入清單中
+            db.query(`SELECT count(*) AS counts FROM AddRecord WHERE list_id = ${listID} AND song_id = ${playingSongID}`, function(error, results, field){
+                let musicExistInList = results[0].counts;
+                if(!musicExistInList){ //若不存在，將歌曲加入清單
+                    db.query(`INSERT INTO AddRecord VALUE("${listID}", "${playingSongID}", "${curTime}")`, function(error, results, field){
+                        if(error) throw error;
+                    });
+                    res.json({message: `已成功將歌曲加入 「${storeList}」`});
+                }
+                else {
+                    res.json({message: `該歌曲已經在「${storeList}」中摟`});
+                }
+            });
+        });
+    });
+})
+
 // db.end();
 
 const port = 3000;

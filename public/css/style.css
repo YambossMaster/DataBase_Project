@@ -244,5 +244,20 @@ footer {
 }
 .functionBar {
     width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
     /* background-color: thistle; */
+}
+.functionBar:hover {
+    background-color: rgb(115, 115, 115);
+    color: black;
+}
+.functionBar>.confirm-form {
+    display: none;
+}
+.functionBar input {
+    width: 100px;
+    font-size: 10px;
 }

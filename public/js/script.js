@@ -34,6 +34,48 @@ setInterval(() => {
 const musicBlocks = document.querySelectorAll('.musicBlock');
 musicBlocks.forEach(musicBlock => {
     let musicCover = musicBlock.querySelector('.musicCover');
+    let functionBar = musicBlock.querySelector('.functionBar');
+    let storeButton = functionBar.querySelector('.store-button');
+    let confirmForm = functionBar.querySelector('.confirm-form');
+    let form = confirmForm.querySelector('form');
+
+    // 最右邊儲存按鈕的點擊事件
+    functionBar.addEventListener("click", () => {
+        storeButton.style.display = "none";
+        confirmForm.style.display = "block";
+        
+    });
+    // 儲存至...輸入欄位提交事件
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let storeListInput = confirmForm.querySelector('#store-list');
+        console.log(storeListInput.value);
+        let addConfirm = confirm(`要將歌曲加入 「${storeListInput.value}」 ㄇ?`);
+        if(addConfirm){
+            fetch('http://localhost:3000/addMusicToList', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({musicBlockId : musicBlock.id, storeList : storeListInput.value})
+            })
+            .then(response => {
+                console.log('Success:', response);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                alert(data.message);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+        storeListInput.value = "";
+        confirmForm.style.display = "none";
+        storeButton.style.display = "block";
+    });
+
     musicCover.addEventListener("click", () => {
         footer.classList.add("show");
         myAudio.autoplay = true;
@@ -58,3 +100,5 @@ musicBlocks.forEach(musicBlock => {
 
     });
 });
+
+// 音樂區塊儲存的點擊事件
