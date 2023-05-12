@@ -116,8 +116,13 @@ app.get('/history', function(req, res) {
     });
 })
 app.get('/playlist', function(req, res) {
-    res.render('playlist', {
-        'title': '你的清單'
+    db.query(`SELECT PlayList.*, count(*) AS songCounts FROM AddRecord, PlayList WHERE PlayList.list_id = AddRecord.list_id AND PlayList.user_id = ${curUserID} GROUP BY PlayList.list_id ORDER BY createdate DESC;`, function(error, results, field){
+        if(error) throw error;
+        let lists = results;
+        res.render('playlist', {
+            'title': '你的清單',
+            'lists': lists,
+        });
     });
 })
 app.post('/search', function(req, res) {
@@ -158,6 +163,25 @@ app.post('/loginBuffer', function(req, res) {
         console.log(curUserID);
     });
     res.send(`<script>console.log("login success");window.location.href = '/home'</script>`);
+})
+
+app.get('/playlist/list', function(req, res) {
+    let listID = Number(req.query.listID);
+    db.query(`SELECT newTable.*, singername, PlayList.list_id, PlayList.listname, AddRecord.add_time FROM
+    (SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
+    FROM Song INNER JOIN MusicType ON Song.song_id = MusicType.song_id INNER JOIN (SELECT Song.*, GROUP_CONCAT(language SEPARATOR ', ') AS music_languages
+    FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
+    GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
+    GROUP BY Song.song_id) AS newTable, Singer, AddRecord, PlayList
+    WHERE newTable.singer_id = Singer.singer_id AND newTable.song_id = Addrecord.song_id AND PlayList.list_id = AddRecord.list_id AND PlayList.list_id = ${listID}
+    ORDER BY AddRecord.add_time DESC;`, function(error, results, field){
+        if(error) throw error;
+        const song = results;
+        res.render('search', {
+            title: `儲存於"${song[0].listname}"的歌曲`,
+            song: song
+        });
+    });
 })
 
 app.post('/PlayingUpdate', function(req, res) {

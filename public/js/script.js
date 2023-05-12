@@ -101,4 +101,10 @@ musicBlocks.forEach(musicBlock => {
     });
 });
 
-// 音樂區塊儲存的點擊事件
+// 播放清單的點擊事件
+const lists = document.querySelectorAll('.list');
+lists.forEach(list => {
+    list.addEventListener("click", () => {
+        window.location.href = `/playlist/list?listID=${list.id}`;
+    })
+})

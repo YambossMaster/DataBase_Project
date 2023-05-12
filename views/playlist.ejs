@@ -1,2 +1,18 @@
 <% layout('layout') %>
-<h1>這裡是播放清單</h1>
+<div class="playlist">
+    <h1>這裡是播放清單</h1>
+    <% for(var i = 0; i < lists.length; i++){ %>
+        <% var createDate = new Date(lists[i].createdate).toLocaleDateString('zh-TW') %>
+        <div class="list" id="<%= lists[i].list_id %>">
+            <div class="listName">
+                <%= lists[i].listname %>
+            </div>
+            <div class="listTotalSong">
+                <%= lists[i].songCounts %> 首歌曲
+            </div>
+            <div class="listCreateDate">
+                建立時間: <%= createDate %>
+            </div>
+        </div>
+    <% } %>
+</div>
