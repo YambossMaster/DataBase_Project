@@ -140,7 +140,7 @@ app.post('/search', function(req, res) {
     FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
     GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
     GROUP BY Song.song_id) AS newTable, Singer
-    WHERE (newTable.songname LIKE '%${req.body.search}%' OR newTable.music_types LIKE '%${req.body.search}%' OR newTable.music_languages LIKE '%${req.body.search}%') AND newTable.singer_id = Singer.singer_id`, function(error, results, fields){
+    WHERE (newTable.songname LIKE '%${req.body.search}%' OR newTable.music_types LIKE '%${req.body.search}%' OR newTable.music_languages LIKE '%${req.body.search}%' OR singername LIKE '%${req.body.search}%') AND newTable.singer_id = Singer.singer_id`, function(error, results, fields){
         if(error) throw error;
         const searchResult = results;
         res.render('musiclist', {
