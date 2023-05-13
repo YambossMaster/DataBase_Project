@@ -18,10 +18,10 @@ let song;
 let user;
 var curUserID;
 
-db.query('SELECT * FROM Singer', function(error, results, fields){
-    if(error) throw error;
-    singer = results;
-});
+// db.query('SELECT * FROM Singer', function(error, results, fields){
+//     if(error) throw error;
+//     singer = results;
+// });
 // db.query('SELECT * FROM Song', function(error, results, fields){
 //     if(error) throw error;
 //     song = results;
@@ -75,16 +75,17 @@ app.post('/regfinish',function(req,res){
 })
 app.get('/home', function(req, res) {
     db.query(
-        `SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
+        `SELECT newTable.*, singername FROM
+        (SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
         FROM Song INNER JOIN MusicType ON Song.song_id = MusicType.song_id INNER JOIN (SELECT Song.*, GROUP_CONCAT(language SEPARATOR ', ') AS music_languages
         FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
         GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
-        GROUP BY Song.song_id;`, function(error, results, fields){
+        GROUP BY Song.song_id) AS newTable, Singer
+        WHERE newTable.singer_id = Singer.singer_id`, function(error, results, fields){
         if(error) throw error;
         song = results;
         res.render('index', {
             'title': '首頁',
-            'singer' : singer,
             'song' : song
             //'title': data[0].name
         });

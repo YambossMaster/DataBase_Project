@@ -108,3 +108,12 @@ lists.forEach(list => {
         window.location.href = `/playlist/list?listID=${list.id}`;
     })
 })
+
+// 若container的子元素超出預定大小，則調整其高度
+const container = document.querySelector('.container');
+let height = container.scrollHeight;
+console.log(height);
+if(height > 1000){
+    height += 100;
+    container.style.height = `${height}px`;
+}
