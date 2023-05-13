@@ -1,4 +1,9 @@
 <% layout('layout') %>
+<script>
+    if(window.location.pathname == "/home"){
+        document.write(`<div><h1>為您推薦</h1></div>`);
+    }
+</script>
 <div class="musicList">
     <% for(var i = 0; i < song.length; i++){ %>
         <div class="musicBlock" id="<%= song[i].filelink %>">

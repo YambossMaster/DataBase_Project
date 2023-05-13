@@ -52,7 +52,7 @@ musicBlocks.forEach(musicBlock => {
         console.log(storeListInput.value);
         let addConfirm = confirm(`要將歌曲加入 「${storeListInput.value}」 ㄇ?`);
         if(addConfirm){
-            fetch('http://localhost:3000/addMusicToList', {
+            fetch('http://localhost:3000/api/addMusicToList', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ musicBlocks.forEach(musicBlock => {
         console.log(JSON.stringify(musicBlock.id));
 
         // 使用fetch方法傳遞被點擊的音樂ID給後端，更新播放紀錄與播放次數
-        fetch('http://localhost:3000/PlayingUpdate', {
+        fetch('http://localhost:3000/api/PlayingUpdate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

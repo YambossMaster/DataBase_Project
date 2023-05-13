@@ -13,10 +13,8 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use('/static', express.static(__dirname + '/public'));
 
-let singer;
-let song;
-let user;
 var curUserID;
+var curUserName;
 
 // db.query('SELECT * FROM Singer', function(error, results, fields){
 //     if(error) throw error;
@@ -35,7 +33,7 @@ var curUserID;
 app.get('/',function(req, res){
     db.query('SELECT * FROM User', function(error, results, fields){
         if(error) throw error;
-        user = results;
+        let user = results;
         res.render('login',{
             'title' : '登入',
             'user' : user
@@ -45,7 +43,7 @@ app.get('/',function(req, res){
 app.get('/register',function(req,res){
     db.query('SELECT * FROM User', function(error, results, fields){
         if(error) throw error;
-        user = results;
+        let user = results;
         res.render('register',{
             'title':'註冊',
             'user' : user
@@ -74,29 +72,38 @@ app.post('/regfinish',function(req,res){
     });
 })
 app.get('/home', function(req, res) {
-    db.query(
-        `SELECT newTable.*, singername FROM
+    db.query(`SELECT newTable.*, singername FROM
         (SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
         FROM Song INNER JOIN MusicType ON Song.song_id = MusicType.song_id INNER JOIN (SELECT Song.*, GROUP_CONCAT(language SEPARATOR ', ') AS music_languages
         FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
         GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
         GROUP BY Song.song_id) AS newTable, Singer
-        WHERE newTable.singer_id = Singer.singer_id`, function(error, results, fields){
+        WHERE newTable.singer_id = Singer.singer_id
+        ORDER BY rand() LIMIT 5`, function(error, results, fields){
         if(error) throw error;
-        song = results;
-        res.render('index', {
-            'title': '首頁',
-            'song' : song
+        let recommendSong = results;
+        res.render('musiclist', {
+            'title': `安安，${curUserName}`,
+            'song' : recommendSong
             //'title': data[0].name
         });
     });
 })
 app.get('/trend', function(req, res) {
-    res.render('trend', {
-        'title': '熱門',
-        // 'title': data[1].name
-        // 'singer' : singer,
-        // 'song' : song
+    db.query(`SELECT newTable.*, singername FROM
+    (SELECT Song.*, GROUP_CONCAT(music_type SEPARATOR ', ') AS music_types, music_languages
+	FROM Song INNER JOIN MusicType ON Song.song_id = MusicType.song_id INNER JOIN (SELECT Song.*, GROUP_CONCAT(language SEPARATOR ', ') AS music_languages
+	FROM Song INNER JOIN MusicLanguage ON Song.song_id = MusicLanguage.song_id
+	GROUP BY Song.song_id) AS songAndLanguages ON Song.song_id = songAndLanguages.song_id
+	GROUP BY Song.song_id) AS newTable, Singer
+    WHERE newTable.singer_id = Singer.singer_id
+    ORDER BY playtime DESC`, function(error, results, field){
+        if(error) throw error;
+        let sortByPlaytime = results;
+        res.render('musiclist', {
+            'title': '熱門',
+            'song' : sortByPlaytime
+        });
     });
 })
 app.get('/history', function(req, res) {
@@ -110,7 +117,7 @@ app.get('/history', function(req, res) {
         ORDER BY record desc`, function(error, results, fields){
         if(error) throw error;
         let playRecord = results;
-        res.render('history', {
+        res.render('musiclist', {
             'title': '播放紀錄',
             'song' : playRecord
         });
@@ -136,7 +143,7 @@ app.post('/search', function(req, res) {
     WHERE (newTable.songname LIKE '%${req.body.search}%' OR newTable.music_types LIKE '%${req.body.search}%' OR newTable.music_languages LIKE '%${req.body.search}%') AND newTable.singer_id = Singer.singer_id`, function(error, results, fields){
         if(error) throw error;
         const searchResult = results;
-        res.render('search', {
+        res.render('musiclist', {
             'title': '搜尋結果',
             'song' : searchResult,
             // 'title': data[2].name
@@ -156,9 +163,9 @@ app.post('/search', function(req, res) {
     // }
 })
 app.post('/loginBuffer', function(req, res) {
-    let userName = req.body.login_username;
-    console.log(userName);
-    db.query(`SELECT user_id FROM User WHERE nickname = "${userName}"`, function(error, results, fields){
+    curUserName = req.body.login_username;
+    console.log(curUserName);
+    db.query(`SELECT user_id FROM User WHERE nickname = "${curUserName}"`, function(error, results, fields){
         if(error) throw error;
         curUserID = results[0].user_id;
         console.log(curUserID);
@@ -178,14 +185,14 @@ app.get('/playlist/list', function(req, res) {
     ORDER BY AddRecord.add_time DESC;`, function(error, results, field){
         if(error) throw error;
         const song = results;
-        res.render('search', {
+        res.render('musiclist', {
             title: `儲存於"${song[0].listname}"的歌曲`,
             song: song
         });
     });
 })
 
-app.post('/PlayingUpdate', function(req, res) {
+app.post('/api/PlayingUpdate', function(req, res) {
     let playingSongID = Number(req.body.musicBlockId);
     let curTime = date.format(new Date(), 'YYYY-MM-DD HH-mm-ss');
     console.log(playingSongID);
@@ -215,7 +222,7 @@ app.post('/PlayingUpdate', function(req, res) {
 })
 
 // 音樂加入清單請求
-app.post('/addMusicToList', function(req, res){
+app.post('/api/addMusicToList', function(req, res){
     let curTime = date.format(new Date(), 'YYYY-MM-DD HH-mm-ss');
     let playingSongID = Number(req.body.musicBlockId);
     let storeList = req.body.storeList;
