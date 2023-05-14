@@ -295,3 +295,16 @@ footer {
     width: 30%;
     align-self: flex-end;
 }
+
+/* 清除播放紀錄區塊 */
+.clear-history {
+    width: auto;
+    height: auto;
+    /* background-color: tomato; */
+    align-self: flex-end;
+    border: 1px solid black;
+    cursor: pointer;
+}
+.clear-history:hover {
+    background-color: rgb(115, 115, 115);
+}

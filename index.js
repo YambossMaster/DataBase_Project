@@ -260,6 +260,13 @@ app.post('/api/addMusicToList', function(req, res){
     });
 })
 
+// 刪除目前使用者的全部播放紀錄
+app.post('/api/clearHistory', function(req, res){
+    db.query(`DELETE FROM PlayRecord WHERE user_id = ${curUserID}`, function(error, results, field){
+        if(error) throw error;
+    });
+})
+
 // db.end();
 
 const port = 3000;

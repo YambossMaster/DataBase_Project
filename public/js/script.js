@@ -113,7 +113,32 @@ lists.forEach(list => {
 const container = document.querySelector('.container');
 let height = container.scrollHeight;
 console.log(height);
-if(height > 1000){
+if(height > 900){
     height += 100;
     container.style.height = `${height}px`;
+}
+
+// 清除播放紀錄
+if(window.location.pathname == "/history"){
+    const musicList = document.querySelector('.musicList');
+    const clearHistoryBtn = document.querySelector('.clear-history');
+    clearHistoryBtn.addEventListener("click", () => {
+        let clearConfirm = confirm("確定要清除所有播放紀錄ㄇ");
+        if(clearConfirm){
+            musicList.innerHTML = "";
+            // 使用fetch方法向後端發送請求
+            fetch('http://localhost:3000/api/clearHistory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Success:', response);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    })
 }

@@ -3,6 +3,9 @@
     if(window.location.pathname == "/home"){
         document.write(`<div><h1>為您推薦</h1></div>`);
     }
+    else if(window.location.pathname == "/history"){
+        document.write(`<div class="clear-history"><i class="fa-solid fa-trash-can"></i>清除所有播放紀錄</div>`)
+    }
 </script>
 <div class="musicList">
     <% for(var i = 0; i < song.length; i++){ %>
