@@ -1,12 +1,12 @@
-let demo = document.getElementById("demo");
+let slideAngle = document.getElementById("slide-angle");
 let myAudio = document.getElementById("myAudio");
 let footer = document.querySelector("footer");
-demo.addEventListener("click", () => {
+
+slideAngle.addEventListener("click", () => {
     scrollTo({
         top: window.innerHeight,
         behavior: 'smooth'
     });
-    // myAudio.src = "/static/music/0002.mp3";
 });
 if(window.location.pathname != "/home"){
     setTimeout(function() {
@@ -14,11 +14,7 @@ if(window.location.pathname != "/home"){
             top: window.innerHeight,
             behavior: 'smooth'
         });
-        // footer.classList.add("show");
     }, 1000);
-}
-if(window.location.pathname == "/home"){
-    myAudio.autoplay = false;
 }
 
 // header的圖片輪播

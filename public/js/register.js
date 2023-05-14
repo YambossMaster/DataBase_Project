@@ -3,9 +3,6 @@ const usernameInput = document.querySelector('#user_name');
 const emailInput = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
 const repasswordInput = document.querySelector('#repassword');
-// const birth_dInput = document.querySelector('#birth_d');
-// const birth_mInput = document.querySelector('#birth_m');
-// const birth_yInput = document.querySelector('#birth_y');
 const birthInput = document.querySelector('#birth');
 const registerBtn = document.querySelector('#register-btn');
 
@@ -42,9 +39,6 @@ form.addEventListener('submit', function(event) {
   const password = passwordInput.value;
   const repassword = repasswordInput.value;
   const email = emailInput.value;
-  // const birth_d = birth_dInput.value;
-  // const birth_m = birth_mInput.value;
-  // const birth_y = birth_yInput.value;
   const birth = birthInput.value;
 
   const inputCode = codeInput.value;
@@ -53,13 +47,6 @@ form.addEventListener('submit', function(event) {
   let verificationSuccess = false;
   let userNotInDB = true;
   let allPass = false;
-  // if(password=="" || repassword=="" || email=="" || username==""){
-  //   alert('註冊資訊不完整，請詳細填寫！');
-  // }
-  // else{
-  //   complete=true;
-  // }
-  
 
   /*password and repassword*/
   if(password != repassword){
@@ -100,13 +87,11 @@ form.addEventListener('submit', function(event) {
       }
     }
     if(userNotInDB){
-      /*將username email password birthday 加入數據庫存儲*/
       allPass = true;
     }
   }
 
   if(allPass) {
     form.submit();
-    // window.location.href = '/';
   }
 });

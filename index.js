@@ -16,20 +16,6 @@ app.use('/static', express.static(__dirname + '/public'));
 var curUserID;
 var curUserName;
 
-// db.query('SELECT * FROM Singer', function(error, results, fields){
-//     if(error) throw error;
-//     singer = results;
-// });
-// db.query('SELECT * FROM Song', function(error, results, fields){
-//     if(error) throw error;
-//     song = results;
-// });
-
-// db.query('SELECT * FROM User', function(error, results, fields){
-//     if(error) throw error;
-//     user = results;
-// });
-
 app.get('/',function(req, res){
     db.query('SELECT * FROM User', function(error, results, fields){
         if(error) throw error;
@@ -61,13 +47,6 @@ app.post('/regfinish',function(req,res){
         if(error) throw error;
         res.render('regfinish',{
             'title':'註冊',
-            'user' : user,
-            'userName' : userName,
-            'email' : email,
-            'genter' : gender,
-            'password' : password,
-            'birthday' : birthday,
-            'regDate' : curDate
         })
     });
 })
@@ -85,7 +64,6 @@ app.get('/home', function(req, res) {
         res.render('musiclist', {
             'title': `安安，${curUserName}`,
             'song' : recommendSong
-            //'title': data[0].name
         });
     });
 })
@@ -146,21 +124,8 @@ app.post('/search', function(req, res) {
         res.render('musiclist', {
             'title': '搜尋結果',
             'song' : searchResult,
-            // 'title': data[2].name
         });
     });
-    // if(req.body.search == "魔法禁書目錄"){
-    //     res.render('search', {
-    //         'title': 'haha'
-    //         // 'title': data[2].name
-    //     });
-    // }
-    // else {
-    //     res.render('search', {
-    //         'title': '菜逼八'
-    //         // 'title': data[2].name
-    //     });
-    // }
 })
 app.post('/loginBuffer', function(req, res) {
     curUserName = req.body.login_username;
@@ -266,8 +231,6 @@ app.post('/api/clearHistory', function(req, res){
         if(error) throw error;
     });
 })
-
-// db.end();
 
 const port = 3000;
 

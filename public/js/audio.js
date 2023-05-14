@@ -19,12 +19,10 @@ function updateProgressBar() {
 
 audio.addEventListener('play', () => {
     playBtn.innerHTML = `<i class="fa-solid fa-circle-pause fa-2xl"></i>`;
-//   playBtn.classList.add('playing');
 });
 
 audio.addEventListener('pause', () => {
     playBtn.innerHTML = `<i class="fa-solid fa-circle-play fa-2xl"></i>`;
-// playBtn.classList.remove('playing');
 });
 
 audio.addEventListener('ended', () => {
