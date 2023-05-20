@@ -221,7 +221,7 @@ app.post('/api/addMusicToList', function(req, res){
             });
         }
         // 取得輸入清單的編號
-        db.query(`SELECT list_id FROM PlayList WHERE listname = "${storeList}"`, function(error, results, field){
+        db.query(`SELECT list_id FROM PlayList WHERE listname = "${storeList}" AND user_id = ${curUserID}`, function(error, results, field){
             if(error) throw error;
             let listID = results[0].list_id;
             // 確認歌曲是否存在於輸入清單中
