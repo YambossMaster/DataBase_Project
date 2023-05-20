@@ -17,6 +17,13 @@ loginForm.addEventListener('submit', function(event) {
     password.value = "";
   }
   else {
-    loginForm.submit();
+    let linkStart = document.querySelector('.link-start');
+    linkStart.style.display = 'block';
+    // 等待一秒後執行指定的程式碼
+    setTimeout(function() {
+      loginForm.submit();
+    }, 2500);
+
+    // loginForm.submit();
   }
 });
